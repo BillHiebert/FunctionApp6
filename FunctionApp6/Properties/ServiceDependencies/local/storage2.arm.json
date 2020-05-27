@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "name": "aapt0527Group",
+      "location": "westus",
+      "apiVersion": "2019-10-01"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "[concat('aapt0527GroupDeployment', uniqueString(subscription().subscriptionId))]",
+      "resourceGroup": "aapt0527Group",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "aapt0527Group"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+              },
+              "kind": "Storage",
+              "name": "webapplication2storage",
+              "type": "Microsoft.Storage/storageAccounts",
+              "location": "eastus",
+              "apiVersion": "2017-10-01"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
